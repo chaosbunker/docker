@@ -144,8 +144,8 @@ RUN set -ex; \
     apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false $fetchDeps; \
     rm -rf /var/lib/apt/lists/*
 
-COPY *.sh upgrade.exclude /
-COPY config/* /usr/src/nextcloud/config/
+COPY 18.0/apache/*.sh upgrade.exclude /
+COPY 18.0/apache/config/* /usr/src/nextcloud/config/
 
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["apache2-foreground"]
