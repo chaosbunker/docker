@@ -100,7 +100,7 @@ RUN { \
     \
     echo 'memory_limit=512M' > /usr/local/etc/php/conf.d/memory-limit.ini; \
     \
-    mkdir /var/www/data; \
+    mkdir -p /var/www/data/config; \
     chown -R www-data:root /var/www; \
     chmod -R g=u /var/www
 
@@ -144,8 +144,8 @@ RUN set -ex; \
     apt-get purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false $fetchDeps; \
     rm -rf /var/lib/apt/lists/*
 
-COPY *.sh upgrade.exclude /
-COPY config/* /usr/src/nextcloud/config/
+COPY 19.0-rc/apache/*.sh upgrade.exclude /
+COPY 19.0-rc/apache/config/* /usr/src/nextcloud/config/
 
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["apache2-foreground"]
