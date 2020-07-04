@@ -103,6 +103,7 @@ if expr "$1" : "apache" 1>/dev/null || [ "$1" = "php-fpm" ] || [ "${NEXTCLOUD_UP
             fi
         done
         if [ ! -f "/var/www/html/config/config.php" ]; then
+			chown -R www-data:root /var/www/html/config
             rsync $rsync_options --include "/$dir/" --exclude '/*' /usr/src/nextcloud/ /var/www/html/
         fi
         rsync $rsync_options --include '/version.php' --exclude '/*' /usr/src/nextcloud/ /var/www/html/
