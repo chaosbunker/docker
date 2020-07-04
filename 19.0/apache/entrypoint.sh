@@ -97,11 +97,14 @@ if expr "$1" : "apache" 1>/dev/null || [ "$1" = "php-fpm" ] || [ "${NEXTCLOUD_UP
         fi
         rsync $rsync_options --delete --exclude-from=/upgrade.exclude /usr/src/nextcloud/ /var/www/html/
 
-        for dir in config data custom_apps themes; do
+        for dir in data custom_apps themes; do
             if [ ! -d "/var/www/html/$dir" ] || directory_empty "/var/www/html/$dir"; then
                 rsync $rsync_options --include "/$dir/" --exclude '/*' /usr/src/nextcloud/ /var/www/html/
             fi
         done
+        if [ ! -f "/var/www/html/config/config.php" ]; then
+            rsync $rsync_options --include "/$dir/" --exclude '/*' /usr/src/nextcloud/ /var/www/html/
+        fi
         rsync $rsync_options --include '/version.php' --exclude '/*' /usr/src/nextcloud/ /var/www/html/
         echo "Initializing finished"
 
